@@ -1,0 +1,26 @@
+{
+  "name": "hyperion-toggle",
+  "version": "1.0.0",
+  "description": "A small watchdog to turn off hyperion when the main monitor / computer is not turned on",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amcolash/hyperion-toggle.git"
+  },
+  "keywords": [
+    "hyperion"
+  ],
+  "author": "Andrew McOlash",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/amcolash/hyperion-toggle/issues"
+  },
+  "homepage": "https://github.com/amcolash/hyperion-toggle#readme",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "screen-info": "^1.0.1"
+  }
+}
