@@ -1,5 +1,5 @@
 const Ping = require('ping');
-const Screen = require('screen-info');
+// const Screen = require('screen-info');
 const HyperionClient = require('hyperion-client');
 
 // init .env
@@ -19,7 +19,8 @@ if (!HYPERION_IP) {
 }
 
 // On pi ping windows, on windows check displays
-init(PING_IP ? ping : checkDisplays);
+// init(PING_IP ? ping : checkDisplays);
+init(ping);
 
 function init(callback) {
   hyperion = new HyperionClient(HYPERION_IP, 19444, 100).on('connect', function(){
@@ -43,16 +44,16 @@ function ping() {
   });
 }
 
-function checkDisplays() {
-  let displayOn = false;
-  Screen.all().forEach(s => {
-    displayOn |= (s.width > 1920 && s.height > 1080);
-  });
+// function checkDisplays() {
+//   let displayOn = false;
+//   Screen.all().forEach(s => {
+//     displayOn |= (s.width > 1920 && s.height > 1080);
+//   });
 
-  console.log(displayOn)
+//   console.log(displayOn)
 
-  updateHyperion(displayOn);
-}
+//   updateHyperion(displayOn);
+// }
 
 function updateHyperion(currentState) {
   if (currentState != displayState) {

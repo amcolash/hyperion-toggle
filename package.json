@@ -24,7 +24,6 @@
     "dotenv": "^8.0.0",
     "hyperion-client": "^1.0.3",
     "ping": "^0.2.2",
-    "screen-info": "^1.0.1",
     "tar": ">=4.4.2"
   }
 }
