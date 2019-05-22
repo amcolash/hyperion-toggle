@@ -10,7 +10,7 @@ const interval = 5000;
 const HYPERION_IP = process.env.HYPERION_IP;
 const PING_IP = process.env.PING_IP;
 
-let displayState = false;
+let displayState;
 let hyperion;
 
 // On pi ping windows, on windows check displays
