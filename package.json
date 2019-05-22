@@ -21,6 +21,9 @@
   "homepage": "https://github.com/amcolash/hyperion-toggle#readme",
   "dependencies": {
     "axios": "^0.18.0",
+    "dotenv": "^8.0.0",
+    "hyperion-client": "^1.0.3",
+    "ping": "^0.2.2",
     "screen-info": "^1.0.1"
   }
 }
