@@ -1,6 +1,7 @@
 FROM mhart/alpine-node:10
 
 WORKDIR /usr/src/app
-COPY . .
+COPY node_modules .
+COPY index.js .
 
 CMD [ "node", "index.js" ]
