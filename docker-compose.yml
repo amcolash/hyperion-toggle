@@ -1,7 +1,0 @@
-version: '2'
-services:
-  hyperion-toggle:
-    build: .
-    restart: unless-stopped
-    env_file:
-      - .env
