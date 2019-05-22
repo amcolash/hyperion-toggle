@@ -19,12 +19,17 @@ init(PING_IP ? ping : checkDisplays);
 function init(callback) {
   hyperion = new HyperionClient(HYPERION_IP, 19444, 100).on('connect', function(){
     console.log('connected to ' + HYPERION_IP);
-    setInterval(callback, interval);
+    setIntervalImmedately(callback, interval);
   }).on('error', function(err){
     console.error('error connecting to hyperion', err);
     // retry in a little bit
     setTimeout(initClient, interval);
   });
+}
+
+function setIntervalImmedately(callback, seconds) {
+  callback();
+  return setInterval(callback, seconds * 1000);
 }
 
 function ping() {
@@ -44,8 +49,6 @@ function checkDisplays() {
 
 function updateHyperion(currentState) {
   if (currentState != displayState) {
-    console.log('state change');
-  
     if (currentState) {
       hyperion.clearall((err, result) => console.log('clearing server state', result, err));
     } else {
