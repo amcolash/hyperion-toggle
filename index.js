@@ -13,6 +13,11 @@ const PING_IP = process.env.PING_IP;
 let displayState;
 let hyperion;
 
+if (!HYPERION_IP) {
+  console.error('you need to make a .env file with your IP addresses configured');
+  process.exit(1);
+}
+
 // On pi ping windows, on windows check displays
 init(PING_IP ? ping : checkDisplays);
 
@@ -23,13 +28,13 @@ function init(callback) {
   }).on('error', function(err){
     console.error('error connecting to hyperion', err);
     // retry in a little bit
-    setTimeout(initClient, interval);
+    setTimeout(init, interval);
   });
 }
 
-function setIntervalImmedately(callback, seconds) {
+function setIntervalImmedately(callback, ms) {
   callback();
-  return setInterval(callback, seconds * 1000);
+  return setInterval(callback, ms);
 }
 
 function ping() {
@@ -43,6 +48,8 @@ function checkDisplays() {
   Screen.all().forEach(s => {
     displayOn |= (s.width > 1920 && s.height > 1080);
   });
+
+  console.log(displayOn)
 
   updateHyperion(displayOn);
 }
