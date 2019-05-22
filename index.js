@@ -50,7 +50,7 @@ function checkDisplays() {
 function updateHyperion(currentState) {
   if (currentState != displayState) {
     if (currentState) {
-      hyperion.clearall((err, result) => console.log('clearing server state', result, err));
+      hyperion.clear((err, result) => console.log('clearing server state', result, err));
     } else {
       hyperion.setColor([0, 0, 0], (err, result) => console.log('set color: ', result, err));
     }
