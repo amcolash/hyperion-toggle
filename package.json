@@ -2,9 +2,12 @@
   "name": "hyperion-toggle",
   "version": "1.0.0",
   "description": "A small watchdog to turn off hyperion when the main monitor / computer is not turned on",
-  "main": "index.js",
+  "main": "windows.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "postinstall": "electron-builder install-app-deps",
+    "start": "electron ./",
+    "pack": "build --dir",
+    "dist": "rm -rf dist && build"
   },
   "repository": {
     "type": "git",
@@ -20,10 +23,23 @@
   },
   "homepage": "https://github.com/amcolash/hyperion-toggle#readme",
   "dependencies": {
-    "axios": "^0.18.0",
     "dotenv": "^8.0.0",
     "hyperion-client": "^1.0.3",
     "ping": "^0.2.2",
     "tar": ">=4.4.2"
+  },
+  "devDependencies": {
+    "electron": "^5.0.1",
+    "electron-builder": "^20.40.2"
+  },
+  "build": {
+    "appId": "HyperionToggle",
+    "extraFiles": [
+      "build/icon_tray.png"
+    ],
+    "win": {
+      "target": "portable",
+      "icon": "build/icon.ico"
+    }
   }
 }
