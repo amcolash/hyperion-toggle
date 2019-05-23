@@ -1,9 +1,11 @@
+const electron = require('electron');
+const { app } = require('electron');
+const path = require('path');
 const Ping = require('ping');
-// const Screen = require('screen-info');
 const HyperionClient = require('hyperion-client');
 
 // init .env
-require('dotenv').config();
+require('dotenv').config({ path: path.join(__dirname, '.env') });
 
 // constants
 const interval = 5000;
@@ -13,14 +15,21 @@ const PING_IP = process.env.PING_IP;
 let displayState;
 let hyperion;
 
-if (!HYPERION_IP) {
-  console.error('you need to make a .env file with your IP addresses configured');
-  process.exit(1);
-}
-
-// On pi ping windows, on windows check displays
-// init(PING_IP ? ping : checkDisplays);
-init(ping);
+app.on('ready', () => {
+  if (!HYPERION_IP) {
+    console.error('you need to make a .env file with your IP addresses configured');
+    process.exit(1);
+  }
+  
+  // On pi ping windows, on windows check displays
+  if (PING_IP) {
+    console.log('going to ping desktop');
+    init(ping);
+  } else {
+    console.log('going to check desktop displays');
+    init(checkDisplays);
+  }
+});
 
 function init(callback) {
   hyperion = new HyperionClient(HYPERION_IP, 19444, 100).on('connect', function(){
@@ -39,21 +48,19 @@ function setIntervalImmedately(callback, ms) {
 }
 
 function ping() {
-  Ping.sys.probe(process.env.PING_IP, function(isAlive){
+  Ping.sys.probe(PING_IP, function(isAlive){
     updateHyperion(isAlive);
   });
 }
 
-// function checkDisplays() {
-//   let displayOn = false;
-//   Screen.all().forEach(s => {
-//     displayOn |= (s.width > 1920 && s.height > 1080);
-//   });
+function checkDisplays() {
+  let displayOn = false;
+  electron.screen.getAllDisplays().forEach(s => {
+    displayOn = displayOn || (s.size.width > 1920 && s.size.height > 1080);
+  });
 
-//   console.log(displayOn)
-
-//   updateHyperion(displayOn);
-// }
+  updateHyperion(displayOn);
+}
 
 function updateHyperion(currentState) {
   if (currentState != displayState) {
