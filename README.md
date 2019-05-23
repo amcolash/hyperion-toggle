@@ -1,6 +1,15 @@
 # hyperion-toggle
 A small watchdog to turn off hyperion when the main monitor / computer is not turned on
 
+## Configuration
+You need a `.env` file on both windows and linux. On windows (or device with screen, it needs just hyperion ip). On the linux / hyperion server it needs both an ip to ping and its own ip.
+
+A sample file looks like this:
+```
+PING_IP=192.168.1.108
+HYPERION_IP=192.168.1.109
+```
+
 ## Windows vs. Linux
 There are 2 different scripts that are run slightly differently
 
