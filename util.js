@@ -12,7 +12,7 @@ const PING_IP = process.env.PING_IP;
 const delay = 5000;
 
 let hyperion;
-let previousState = false;
+let previousState;
 
 function init(callback) {
   hyperion = new HyperionClient(HYPERION_IP, 19444, 100).on('connect', function () {
