@@ -21,7 +21,7 @@ function init(callback) {
   }).on('error', function (err) {
     console.error('error connecting to hyperion', err);
     // retry in a little bit
-    setTimeout(init, delay);
+    if (callback) setTimeout(() => init(callback), delay);
   });
 }
 
@@ -45,20 +45,30 @@ function updateHyperion(currentState) {
 function clear(res) {
   hyperion.clear((err, result) => {
     console.log('clearing server state', result, err);
-    if(res && err) res.sendStatus(500);
-    else if (res) res.sendStatus(200);
+    // if(res && err) res.sendStatus(500);
+    // else if (res) res.sendStatus(200);
+    // check err?
+    if (res) res.sendStatus(200);
 
-    if (err) init();
+    if (err) {
+      init();
+      setTimeout(() => clear(), delay);
+    }
   });
 }
 
 function black(res) {
   hyperion.setColor([0, 0, 0], (err, result) => {
     console.log('set color: ', result, err);
-    if(res && err) res.sendStatus(500);
-    else if (res) res.sendStatus(200);
+    // if(res && err) res.sendStatus(500);
+    // else if (res) res.sendStatus(200);
+    // check err?
+    if (res) res.sendStatus(200);
 
-    if (err) init();
+    if (err) {
+      init();
+      setTimeout(() => black(), delay);
+    }
   });
 }
 
