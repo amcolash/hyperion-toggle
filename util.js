@@ -33,18 +33,30 @@ function setIntervalImmedately(callback, ms) {
 function updateHyperion(currentState) {
   if (currentState != previousState) {
     if (currentState) {
-      hyperion.clear((err, result) => console.log('clearing server state', result, err));
+      clear();
     } else {
-      hyperion.setColor([0, 0, 0], (err, result) => console.log('set color: ', result, err));
+      black();
     }
   }
 
   previousState = currentState;
 }
 
+function clear(res) {
+  hyperion.clear((err, result) => console.log('clearing server state', result, err));
+  if(res) res.sendStatus(200);
+}
+
+function black(res) {
+  hyperion.setColor([0, 0, 0], (err, result) => console.log('set color: ', result, err));
+  if(res) res.sendStatus(200);
+}
+
 module.exports = {
   HYPERION_IP: HYPERION_IP,
   PING_IP: PING_IP,
+  black: black,
+  clear: clear,
   init: init,
-  updateHyperion: updateHyperion
+  updateHyperion: updateHyperion,
 };
