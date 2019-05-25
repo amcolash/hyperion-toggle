@@ -7,14 +7,18 @@
     "postinstall": "electron-builder install-app-deps",
     "start": "electron ./",
     "pack": "build --dir",
-    "dist": "rm -rf dist && build"
+    "dist": "rm -rf dist && build",
+    "install-linux": "npm install --ignore-scripts --production"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/amcolash/hyperion-toggle.git"
   },
   "keywords": [
-    "hyperion"
+    "electron",
+    "express",
+    "hyperion",
+    "raspberry pi"
   ],
   "author": "Andrew McOlash",
   "license": "MIT",
