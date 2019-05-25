@@ -10,7 +10,7 @@ if (!Util.HYPERION_IP || !Util.PING_IP) {
   process.exit(1);
 }
 
-const PORT = 19445;
+const PORT = 19446;
 const app = express();
 
 console.log('going to check desktop displays');
