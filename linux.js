@@ -36,7 +36,6 @@ function runCommand(res, command, params) {
 
 
 app.listen(PORT, () => console.log('Running server on port: ' + PORT));
-app.get('/', (req, res) => res.send('HyperionToggle server runnning'));
 
 const friendlyNames = {
   'black_leds': 'Turn off HyperionToggle LEDS',
@@ -47,18 +46,17 @@ const friendlyNames = {
   'stop_service': 'Stop Hyperion service',
   'restart_service': 'Restart Hyperion service'
 };
-app.get('/commands', (req, res) => {
+app.get('/', (req, res) => {
   // Get a list of routes that are not '/' and '/commands'
   const routes = app._router.stack
-    .filter(r => r.route && r.route.path !== '/' && r.route.path !== '/commands')
-    .map(r => { return { path: r.route.path, name: friendlyNames[r.route.path.replace('/', '')] } })
+    .filter(r => r.route && r.route.path !== '/')
+    .map(r => { return { path: r.route.path, name: friendlyNames[r.route.path.replace('/', '')] } });
   
   res.send(routes);
 });
 
-app.get('/black_leds', (req, res) => Util.black(res));
-app.get('/clear_leds', (req, res) => Util.clear(res));
-app.get('/ls', (req, res) => runCommand(res, 'sudo', ['ls']));
+app.get('/black_leds', (req, res) => Util.black(res, true));
+app.get('/clear_leds', (req, res) => Util.clear(res, true));
 app.get('/reboot', (req, res) => runCommand(res, 'sudo', ['reboot', 'now']));
 app.get('/shutdown', (req, res) => runCommand(res, 'sudo', ['shutdown', 'now']));
 app.get('/start_service', (req, res) => runCommand(res, 'sudo', ['service', 'hyperion', 'start']));

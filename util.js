@@ -33,41 +33,39 @@ function setIntervalImmedately(callback, ms) {
 function updateHyperion(currentState) {
   if (currentState != previousState) {
     if (currentState) {
-      clear();
+      clear(undefined, true);
     } else {
-      black();
+      black(undefined, true);
     }
   }
 
   previousState = currentState;
 }
 
-function clear(res) {
+function clear(res, retry) {
   hyperion.clear((err, result) => {
     console.log('clearing server state', result, err);
-    // if(res && err) res.sendStatus(500);
-    // else if (res) res.sendStatus(200);
-    // check err?
-    if (res) res.sendStatus(200);
+    if(res && err) res.sendStatus(500);
+    else if (res) res.sendStatus(200);
 
-    if (err) {
+    // Retry the command once if not connected
+    if (err && retry) {
       init();
-      setTimeout(() => clear(), delay);
+      setTimeout(() => clear(), delay / 2);
     }
   });
 }
 
-function black(res) {
+function black(res, retry) {
   hyperion.setColor([0, 0, 0], (err, result) => {
     console.log('set color: ', result, err);
-    // if(res && err) res.sendStatus(500);
-    // else if (res) res.sendStatus(200);
-    // check err?
-    if (res) res.sendStatus(200);
+    if(res && err) res.sendStatus(500);
+    else if (res) res.sendStatus(200);
 
-    if (err) {
+    // Retry the command once if not connected
+    if (err && retry) {
       init();
-      setTimeout(() => black(), delay);
+      setTimeout(() => black(), delay / 2);
     }
   });
 }
