@@ -17,7 +17,7 @@ let previousState;
 function init(callback) {
   hyperion = new HyperionClient(HYPERION_IP, 19444, 100).on('connect', function () {
     console.log('connected to ' + HYPERION_IP);
-    setIntervalImmedately(callback, delay);
+    if (callback) setIntervalImmedately(callback, delay);
   }).on('error', function (err) {
     console.error('error connecting to hyperion', err);
     // retry in a little bit
@@ -43,13 +43,23 @@ function updateHyperion(currentState) {
 }
 
 function clear(res) {
-  hyperion.clear((err, result) => console.log('clearing server state', result, err));
-  if(res) res.sendStatus(200);
+  hyperion.clear((err, result) => {
+    console.log('clearing server state', result, err);
+    if(res && err) res.sendStatus(500);
+    else if (res) res.sendStatus(200);
+
+    if (err) init();
+  });
 }
 
 function black(res) {
-  hyperion.setColor([0, 0, 0], (err, result) => console.log('set color: ', result, err));
-  if(res) res.sendStatus(200);
+  hyperion.setColor([0, 0, 0], (err, result) => {
+    console.log('set color: ', result, err);
+    if(res && err) res.sendStatus(500);
+    else if (res) res.sendStatus(200);
+
+    if (err) init();
+  });
 }
 
 module.exports = {
