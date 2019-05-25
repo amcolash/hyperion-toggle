@@ -45,13 +45,14 @@ function updateHyperion(currentState) {
 function clear(res, retry) {
   hyperion.clear((err, result) => {
     console.log('clearing server state', result, err);
-    if(res && err) res.sendStatus(500);
-    else if (res) res.sendStatus(200);
+    if (res && !err) res.sendStatus(200);
 
     // Retry the command once if not connected
     if (err && retry) {
       init();
-      setTimeout(() => clear(), delay / 2);
+      setTimeout(() => clear(res), delay / 3);
+    } else if (err && res) {
+      res.sendStatus(500);
     }
   });
 }
@@ -59,13 +60,14 @@ function clear(res, retry) {
 function black(res, retry) {
   hyperion.setColor([0, 0, 0], (err, result) => {
     console.log('set color: ', result, err);
-    if(res && err) res.sendStatus(500);
-    else if (res) res.sendStatus(200);
+    if (res && !err) res.sendStatus(200);
 
     // Retry the command once if not connected
     if (err && retry) {
       init();
-      setTimeout(() => black(), delay / 2);
+      setTimeout(() => black(res), delay / 3);
+    } else if (err && res) {
+      res.sendStatus(500);
     }
   });
 }
