@@ -1,5 +1,6 @@
 "use strict";
 
+const cors = require('cors');
 const express = require('express');
 const Ping = require('ping');
 const { spawn } = require('child_process');
@@ -12,6 +13,7 @@ if (!Util.HYPERION_IP || !Util.PING_IP) {
 
 const PORT = 19446;
 const app = express();
+app.use(cors());
 
 console.log('going to check desktop displays');
 Util.init(ping);
