@@ -25,17 +25,19 @@ function ping() {
 }
 
 function runCommand(res, command, params) {
+  console.log('running command: ', command, params);
+  
   const cmd = spawn(command, params);
-
   cmd.stdout.on('data', data => console.log(`stdout: ${data}`));
   cmd.stderr.on('data', data => console.log(`stderr: ${data}`));
   cmd.on('close', code => {
-    console.log(`child process exited with code ${code}`);
     if (code === 0) res.sendStatus(200);
-    else res.sendStatus(500);
+    else {
+      console.error(`${command} ${params} failed - child process exited with code ${code}`);
+      res.sendStatus(500);
+    }
   });
 }
-
 
 app.listen(PORT, () => console.log('Running server on port: ' + PORT));
 
