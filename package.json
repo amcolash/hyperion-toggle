@@ -28,15 +28,15 @@
   "homepage": "https://github.com/amcolash/hyperion-toggle#readme",
   "dependencies": {
     "cors": "^2.8.5",
-    "dotenv": "^8.0.0",
-    "express": "^4.17.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
     "hyperion-client": "^1.0.3",
-    "ping": "^0.2.2",
-    "tar": ">=4.4.2"
+    "ping": "^0.2.3",
+    "tar": ">=6.0.2"
   },
   "devDependencies": {
-    "electron": "^5.0.1",
-    "electron-builder": "^20.40.2"
+    "electron": "^8.2.5",
+    "electron-builder": "^22.6.0"
   },
   "build": {
     "appId": "HyperionToggle",
